@@ -3,14 +3,14 @@
 ## Steps to set up in your local system
 
 ### 1. Fisrt get clone of the concerned repo by running following command
-    `git clone https://github.com/ProPhycient5/my_page_builder.git` 
+    git clone https://github.com/ProPhycient5/my_page_builder.git
 
 ### 2. You have to intall npm packages
-    `npm i`
+    npm i
 
 
 ### 3. In the project directory, you can run:
-     `npm start`
+      npm start
 
 Runs the app in the development mode.
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
