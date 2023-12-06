@@ -1,0 +1,136 @@
+.App {
+  text-align: center;
+  /* background-color: grey; */
+  height: 100dvh;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.sidebar_section {
+  padding-top: 50px;
+  width: 20%;
+  background-color: #454545;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
+.canvas_section {
+  width: 80%;
+}
+
+.playground {
+  width: 400px;
+  height: 400px;
+  background-color: #636160;
+  position: relative;
+}
+
+.draggable_item {
+  padding: 4px;
+  margin-bottom: 10px;
+  background-color: #859fff;
+  width: 100px;
+  cursor: grab;
+}
+
+.draggable_item:active {
+  cursor: grabbing;
+}
+
+/* Modal Styles */
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  max-width: 80%;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1100; /* Higher z-index than the modal background */
+}
+
+/* Header Styles */
+.modal-header {
+  background-color: #f0f0f0;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #333;
+}
+
+/* Form Group Styles */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  text-align: left; /* Align labels to the left */
+}
+
+.form-group input {
+  width: 96%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Button styles */
+.save-btn,
+.cancel-btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.save-btn {
+  background-color: #3498db;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
+.save-btn:hover,
+.cancel-btn:hover {
+  opacity: 0.8;
+}
+
+/* Add this CSS to style the Export Button */
+.export-button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  z-index: 999;
+  right: 2%;
+}
+
+.export-button:hover {
+  background-color: #2980b9;
+}
+
+.export-button:active {
+  transform: translateY(1px);
+}
