@@ -40,4 +40,7 @@ Your app is ready to be deployed!
 #### 6. All nodes on the canvas are persisted to `localStorage`, so it won't vanish until we clear the `localstorage.clear()` explicitely.
 #### 7. And lastly if we want to keep backup of the page structure in JSON format, we can use `Export JSON` to do so. 
 
+The following GIF demonstrates how the concerned webapp works
+
+![mini_builder](https://github.com/ProPhycient5/my_page_builder/assets/71059909/6ffca40a-1ae7-4f11-945e-7ce55ec63e56)
 
