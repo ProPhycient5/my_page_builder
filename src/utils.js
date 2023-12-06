@@ -19,3 +19,7 @@ export const downloadJsonFile = (jsonData) => {
 
   URL.revokeObjectURL(url);
 };
+
+export const capitalizeFirstLetter = (string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}

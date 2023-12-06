@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { saveToLocalStorage } from "../utils";
+import { saveToLocalStorage, capitalizeFirstLetter } from "../utils";
 import _ from "lodash";
 
 const EditModal = ({ setShowModal, editableData, elements, setElements }) => {
@@ -51,7 +51,7 @@ const EditModal = ({ setShowModal, editableData, elements, setElements }) => {
   return (
     <div className="modal">
       <div className="modal-header">
-        <h2>Edit Label</h2>
+        <h2>Edit {capitalizeFirstLetter(editableData?.htmlElement)}</h2>
       </div>
       <div className="modal-body">
         <form onSubmit={handleSubmit}>
