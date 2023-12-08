@@ -12,9 +12,6 @@ const Canvas = ({ showModal, setShowModal, draggedItem }) => {
   const [elements, setElements] = useState({});
   const [selectedNode, setSelectedNode] = useState(null);
   const [editableData, setEditableData] = useState({});
-  console.log("showModal", showModal);
-
-  console.log("elements", elements);
 
   useEffect(() => {
     const storedElements = getFromLocalStorage("elements") || {};
