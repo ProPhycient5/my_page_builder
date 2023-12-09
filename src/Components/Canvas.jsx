@@ -12,33 +12,44 @@ const Canvas = ({ showModal, setShowModal, draggedItem }) => {
   const [elements, setElements] = useState({});
   const [selectedNode, setSelectedNode] = useState(null);
   const [editableData, setEditableData] = useState({});
-  console.log("showModal", showModal);
+  const [historyData, setHistoryData] = useState([]);
+  const [index, setIndex] = useState(0);
 
-  console.log("elements", elements);
-
+  console.log("index", index);
+  console.log("historyData", historyData);
   useEffect(() => {
     const storedElements = getFromLocalStorage("elements") || {};
     setElements(storedElements);
+    let tempData = _.cloneDeep(elements);
+    setHistoryData((prev) => [...prev, tempData]);
   }, []);
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      console.log("selectedNode_keydown", selectedNode, e.key);
-      let clonedElements = _.cloneDeep(elements);
-      if (e.key === "Delete" && selectedNode) {
-        delete clonedElements[selectedNode];
-        setElements(clonedElements);
-        saveToLocalStorage("elements", clonedElements);
-        setSelectedNode(null);
-      } else if (e.key === "Enter" && selectedNode) {
-        setShowModal(true);
-        setEditableData(clonedElements[selectedNode]);
-      }
-    };
+  const updateElements = (updatedElements) => {
+    setElements(updatedElements);
+    setIndex((prevIndex) => prevIndex + 1);
+    // Truncate the history beyond the current index when a new change is made
+    const newHistory = historyData.slice(0, index + 1);
+    setHistoryData([...newHistory, updatedElements]);
+  };
 
+  const handleKeyDown = (e) => {
+    console.log("selectedNode_keydown", selectedNode, e.key);
+    let clonedElements = _.cloneDeep(elements);
+    if (e.key === "Delete" && selectedNode) {
+      delete clonedElements[selectedNode];
+      updateElements(clonedElements);
+      saveToLocalStorage("elements", clonedElements);
+      setSelectedNode(null);
+    } else if (e.key === "Enter" && selectedNode) {
+      setShowModal(true);
+      setEditableData(clonedElements[selectedNode]);
+      updateElements(clonedElements);
+    }
+  };
+
+  useEffect(() => {
     // Add event listener to the whole document
     document.addEventListener("keydown", handleKeyDown);
-
     // Clean up the event listener when the component unmounts
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
@@ -64,10 +75,9 @@ const Canvas = ({ showModal, setShowModal, draggedItem }) => {
         },
       };
 
-      // let tempData = _.cloneDeep(newItem);
       setEditableData(newItem); //setting for sending to Modal
       clonedElements[uniqueId] = newItem; // Update the cloned elements object with the new item
-      setElements(clonedElements); // Update the state with the modified cloned object
+      updateElements(clonedElements);
       saveToLocalStorage("elements", clonedElements);
     }
   };
@@ -85,6 +95,26 @@ const Canvas = ({ showModal, setShowModal, draggedItem }) => {
     setSelectedNode(id);
   };
 
+  const handleUndo = () => {
+    if (index > 0) {
+      const previousIndex = index - 1;
+      const previousObj = historyData[previousIndex];
+      let clonedElements = _.cloneDeep(previousObj);
+      setElements(clonedElements);
+      setIndex(previousIndex);
+    }
+  };
+
+  const handleRedo = () => {
+    if (index < historyData.length - 1) {
+      const laterIndex = index + 1;
+      const laterObj = historyData[laterIndex];
+      let clonedElements = _.cloneDeep(laterObj);
+      setElements(clonedElements);
+      setIndex(laterIndex);
+    }
+  };
+
   return (
     <div
       className="canvas_section"
@@ -97,6 +127,8 @@ const Canvas = ({ showModal, setShowModal, draggedItem }) => {
       >
         Export JSON
       </button>
+      <button onClick={handleUndo}>Undo</button>
+      <button onClick={handleRedo}>Redo</button>
 
       {Object.entries(elements).map(([key, value]) =>
         React.createElement(
@@ -119,7 +151,7 @@ const Canvas = ({ showModal, setShowModal, draggedItem }) => {
           setShowModal={setShowModal}
           editableData={editableData}
           elements={elements}
-          setElements={setElements}
+          updateElements={updateElements}
         />
       )}
     </div>

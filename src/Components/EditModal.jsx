@@ -3,7 +3,13 @@ import { useState } from "react";
 import { saveToLocalStorage, capitalizeFirstLetter } from "../utils";
 import _ from "lodash";
 
-const EditModal = ({ setShowModal, editableData, elements, setElements }) => {
+const EditModal = ({
+  setShowModal,
+  editableData,
+  elements,
+ 
+  updateElements
+}) => {
   console.log("editableData", editableData);
   const [formData, setFormData] = useState({
     text: editableData?.children,
@@ -38,7 +44,7 @@ const EditModal = ({ setShowModal, editableData, elements, setElements }) => {
       },
     };
     clonedElements[tempData?.props?.id] = newItem;
-    setElements(clonedElements);
+    updateElements(clonedElements)
     saveToLocalStorage("elements", clonedElements);
     setShowModal(false);
     // For example, you can send the form data to an API or perform other actions
